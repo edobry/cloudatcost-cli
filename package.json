@@ -1,0 +1,7 @@
+{
+  "name": "chashitsu",
+  "main": "index.js",
+  "dependencies": {
+    "node-catc": "^1.0.6"
+  }
+}
