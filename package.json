@@ -2,6 +2,7 @@
   "name": "chashitsu",
   "main": "index.js",
   "dependencies": {
-    "node-catc": "^1.0.6"
+    "node-catc": "^1.0.6",
+    "ronin": "^0.3.11"
   }
 }
