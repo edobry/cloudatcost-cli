@@ -2,7 +2,7 @@ var Command = require("ronin").Command,
     api = require("../../api.js");
 
 module.exports = Command.extend({
-    desc: "Shows CloudPRO resource availability",
+    desc: "Provisions an instance with CloudPRO",
     run: function () {
         api.pro_build({
             cpu: 1,
@@ -10,9 +10,10 @@ module.exports = Command.extend({
             storage: 10,
             os: 75
         }, function(err, res) {
-            if(err)
-                throw err;
-
+            console.log(err);
+            // if(err)
+            //     throw err;
+            
             console.log(JSON.stringify(res));
         });
     }
