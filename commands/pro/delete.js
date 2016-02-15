@@ -13,18 +13,15 @@ module.exports = Command.extend({
         if(!sid)
             throw new Error("sid is required")
 
-        api.pro_delete({sid:sid}, function(err, res) {
-            console.log(err);
+        console.log("Deleting server " + sid + "...");
 
-
+        api.pro_delete(sid, function(err, res) {
             if(err)
-                throw new Error(err);
-
-            console.log(err);
-            // if(err)
-            //     throw err;
+                throw new Error(JSON.stringify(err));
 
             console.log(JSON.stringify(res));
+
+            console.log("Deleted successfully.");
         });
     }
 });

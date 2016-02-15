@@ -29,24 +29,15 @@ CatC.prototype.execute = function(route, params, cb) {
     if(typeof params === "function")
         cb = params;
 
-    var options = {
-        uri: this.url + route + ".php",
-        json: true,
-        rejectUnauthorized: false
-    };
-
-    var methods = {
-        GET: (options, params) => options.uri += toQS(params),
-        POST: (options, params) => options.body = params
-    };
-
     //collect special fields
     var method = params.method || "GET";
     //filter special fields
-    Object.keys(params).filter(key => key != "method").reduce((obj, key) => {
-        obj[key] = params[key];
-        return obj;
-    }, {});
+    params = Object.keys(params)
+        .filter(key => key != "method")
+        .reduce((obj, key) => {
+            obj[key] = params[key];
+            return obj;
+        }, {});
 
     //merge params with creds
     var creds = {
@@ -55,14 +46,23 @@ CatC.prototype.execute = function(route, params, cb) {
     };
     params = Object.assign({}, creds, params);
 
-    //apply params
-    options.method = method;
-    methods[method](options, params);
+    var methods = {
+        GET: "qs",
+        POST: "form"
+    };
+
+    var options = {
+        uri: this.url + route + ".php",
+        json: true,
+        rejectUnauthorized: false,
+        [methods[method]]: params,
+        method
+    };
 
     request(options, function(err, res, body) {
-        if(res)
-            console.log(res.statusCode);
-        if(err) {
+        if(res.statusCode === 200)
+            cb({ status: res.statusCode }, body);
+        else if(err) {
             console.log(err);
             cb({
                 status: err.code && err.code === 'ENETUNREACH'
@@ -70,10 +70,8 @@ CatC.prototype.execute = function(route, params, cb) {
                     : err
             });
         }
-        else if(res.statusCode === 200)
-                cb({ status: res.statusCode }, body);
         else
-            console.log(body);
+            console.log(res.statusCode, err, body);
     });
 };
 
@@ -158,7 +156,7 @@ CatC.prototype.pro_build = function(specs, cb) {
  * @param cb Callback function to call after the request
  */
 CatC.prototype.pro_delete = function(sid, cb) {
-  this.execute('cloudpro/delete', Object.assign({ method: "POST", sid: sid }), cb);
+  this.execute('cloudpro/delete', { sid, method: "POST" }, cb);
 };
 
 module.exports = CatC;
