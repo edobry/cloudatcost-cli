@@ -3,18 +3,28 @@ var Command = require("ronin").Command,
 
 module.exports = Command.extend({
     desc: "Provisions an instance with CloudPRO",
-    run: function () {
-        api.pro_build({
-            cpu: 1,
-            ram: 1024,
-            storage: 10,
-            os: 75
-        }, function(err, res) {
-            console.log(err);
-            // if(err)
-            //     throw err;
-            
-            console.log(JSON.stringify(res));
+    options: {
+        cpu: "string",
+        ram: "string",
+        storage: "string",
+        os: "string",
+    },
+    run: function (cpu, ram, storage, os) {
+        var specs = {
+            cpu: cpu || 1,
+            ram: ram || 1024,
+            storage: storage || 10,
+            os: os || 75
+        };
+
+        console.log("Building new server with:");
+        console.log(Object.keys(specs).map(spec => spec + ": " + specs[spec]).join('\n'));
+
+        api.pro_build(specs, function(err, res) {
+            if(err)
+                throw new Error(JSON.stringify(err));
+
+            console.log("Server '" + res.servername + "'built successfully.");
         });
     }
 });
