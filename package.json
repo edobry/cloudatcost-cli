@@ -1,8 +1,8 @@
 {
-  "name": "chashitsu",
+  "name": "cloudatcost-cli",
   "main": "index.js",
   "dependencies": {
-    "node-catc": "^1.0.6",
+    "cloudatcost": "^2.0.0",
     "ronin": "^0.3.11"
   }
 }
