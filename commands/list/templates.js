@@ -26,8 +26,8 @@ var padTo = function(length) {
 
 var formatTemplates = function(templates) {
     return templates.map(function(template, i) {
-        return i+1 + ". " + template.detail;
-    }).map(padTo(40).with(' ')).reduce(function(builder, template, i, arr) { 
+        return template.ce_id + ": " + template.name;
+    }).map(padTo(40).with(' ')).reduce(function(builder, template, i, arr) {
         var length = builder.rows[builder.next].push(template);
 
         if(length == 3) {
@@ -52,10 +52,8 @@ module.exports = Command.extend({
     desc: "Lists templates",
     run: function () {
         api.listTemplates(function(err, res) {
-            if(res.status != "ok") {
-                console.log("ERROR: ", err);
-                throw err;
-            }
+            if(err)
+                throw new Error(JSON.stringify(err));
 
             console.log("Templates:");
             console.log();

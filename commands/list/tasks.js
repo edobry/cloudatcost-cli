@@ -6,7 +6,7 @@ var Command = require("ronin").Command,
 var formatTasks = function(tasks) {
     return tasks.map(function(task) {
         var out = [];
-        
+
         out.push("Action: " + task.action + ' ' + task.serverid);
         out.push("Status: " + task.status);
         out.push("Duration: " +
