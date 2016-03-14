@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var ronin = require("ronin"),
     nconf = require("nconf"),
     os = require("os"),
