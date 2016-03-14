@@ -5,13 +5,13 @@ a node-based command-line interface for your Cloud@Cost cloud
 ## Install
 
 ```
-[sudo] npm install -g cloudatcost-cli
+sudo npm install -g cloudatcost-cli
 ```
 
 ## Usage
 
 Provide your credentials in `~/.cloudatcost`:
-```
+```json
 {
     "key": "<api key>",
     "email": "you@domain.com"
