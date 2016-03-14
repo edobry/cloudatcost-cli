@@ -6,11 +6,14 @@ var Command = require("ronin").Command,
 var formatServers = function(servers) {
     return servers.map(function(server) {
         var out = [];
+
+        out.push("ID: " + server.id);
+
         if(server.label)
             out.push(server.label + ' (' + server.servername + ')');
         else
             out.push(server.servername);
-        
+
         if(server.hostname != "Not Assigned")
             out.push(server.hostname + ' (' + server.ip + ')');
         else
