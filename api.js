@@ -1,4 +1,4 @@
 var CatC = require("cloudatcost"),
-    config = require("./config.json");
+    nconf = require("nconf");
 
-module.exports = new CatC(config.api_key, config.email);
+module.exports = new CatC(nconf.get("key"), nconf.get("email"));
